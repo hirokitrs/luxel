@@ -1,0 +1,21 @@
+# 文字コードをUTF-8に設定
+AddDefaultCharset UTF-8
+
+# ディレクトリリストの無効化
+Options -Indexes
+
+# .htaccessファイル自体へのアクセスを禁止
+<Files .htaccess>
+  Order allow,deny
+  Deny from all
+</Files>
+
+# wwwなしに統一（必要な場合のみ有効化）
+# RewriteEngine On
+# RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+# RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+# HTTPをHTTPSにリダイレクト（SSL導入時のみ有効化）
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L] 
