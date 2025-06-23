@@ -93,6 +93,13 @@
     width: 100%;
   }
   
+  .navbar-nav .nav-link:focus,
+  .navbar-toggler:focus,
+  .navbar-brand:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
   .logo-img {
     height: 40px;
     width: auto;
@@ -202,8 +209,8 @@
   }
   
   @keyframes scroll-bounce {
-    0%, 100% { transform: rotate(45deg) translateY(0); }
-    50% { transform: rotate(45deg) translateY(10px); }
+    0%, 100% { transform: translateY(0) rotate(45deg); }
+    50% { transform: translateY(10px) rotate(45deg); }
   }
   
   /* ===============================
@@ -605,9 +612,10 @@
   
   .contact-item i {
     font-size: 1.5rem;
-    color: var(--accent-color);
+    color: var(--white);
     margin-right: 1rem;
     margin-top: 0.25rem;
+    opacity: 0.5;
   }
   
   .contact-item h5 {
@@ -684,36 +692,25 @@
     padding: 12px 30px;
     font-weight: 600;
     transition: all 0.3s ease;
+    color: #777;
   }
   
   .contact-form .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    color: var(--primary-color);
   }
-  
+
+  #contact .section-description {
+    color:rgba(255, 255, 255, 0.9);
+  }
+   
   /* ===============================
      FOOTER
      =============================== */
   .footer {
     background: var(--gray-900) !important;
-  }
-  
-  .footer-social a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border-radius: 50%;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  
-  .footer-social a:hover {
-    background: var(--primary-color);
-    transform: translateY(-2px);
   }
   
   .footer-nav {
@@ -725,14 +722,28 @@
   }
   
   .footer-nav .list-inline-item a {
-    color: #fff;
+    color: var(--white);
     text-decoration: none;
     font-size: 1rem;
     transition: color 0.2s;
+    opacity: 0.5;
   }
+
+  .footer-nav .list-inline-item a:hover {
+    opacity: 1;
+  }
+  
   
   .footer-nav .list-inline-item a:hover {
     color: #0d6efd;
+  }
+
+  footer .mb-0 {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.2s;
+    opacity: 0.5;
   }
   
   /* ===============================
@@ -915,7 +926,7 @@
   .main-visual-img {
     width: 100vw;
     height: 60vh;
-    min-height: 453px;
+    min-height: 479px;
     max-height: 80vh;
     object-fit: cover;
     display: block;
@@ -975,13 +986,17 @@
 
   @media (max-width: 991px) {
     .main-visual-img {
-      height: 40vh;
+      height: 78vh;
       min-height: 200px;
       max-width: 100vw;
     }
   }
 
   @media (max-width: 767px) {
+    .hero-section {
+      min-height: 60vh;
+      margin-top:84px;
+    }
     .footer-nav {
       justify-content: center;
       gap: 0.8rem;
@@ -989,12 +1004,20 @@
       margin-top: 0.5rem;
     }
     .main-visual-img {
-      height: 30vh;
+      height: 67vh;
       min-height: 120px;
     }
     .company-details {
       min-width: 0;
       max-width: 100vw;
+    }
+    #services .service-item {
+      max-width: 65vw;
+      margin: 0 auto;
+    }
+    #company .company-details {
+      min-width: 90vw;
+      margin: 0 auto;
     }
   }
 
@@ -1004,4 +1027,41 @@
 
 .logo-text {
     margin-left: 1rem;
+}
+
+/* ===============================
+   SCROLL TO TOP BUTTON
+   =============================== */
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  text-decoration: none;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out, background-color 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.scroll-to-top-btn.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top-btn:hover {
+  background-color: #1d4ed8;
+  color: var(--white);
+  transform: translateY(-2px);
 }

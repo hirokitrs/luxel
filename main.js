@@ -619,4 +619,33 @@ if (window.gsap && window.ScrollTrigger) {
   });
 }
 
+// ===============================
+// SCROLL TO TOP BUTTON
+// ===============================
+const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+const homeSection = document.getElementById('home');
+
+if (scrollToTopBtn && homeSection) {
+  const homeSectionHeight = homeSection.offsetHeight;
+
+  // Show or hide button based on scroll position
+  window.addEventListener('scroll', () => {
+    // homeセクションの高さより多くスクロールしたらボタンを表示
+    if (window.scrollY > homeSectionHeight) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  // Smooth scroll to top on click
+  scrollToTopBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
 console.log('Corporate Website Loaded Successfully! 🚀');
