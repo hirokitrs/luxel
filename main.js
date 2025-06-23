@@ -59,6 +59,25 @@ window.addEventListener('scroll', () => {
 // GSAP ANIMATIONS
 // ===============================
 
+// ロゴ上テキストのGSAPアニメーション
+if (window.gsap) {
+  gsap.from('.logo-en', {
+    y: -80,
+    opacity: 0,
+    duration: 2.2,
+    ease: 'power1.out',
+    delay: 0.1
+  });
+  
+  gsap.from('.logo-ja', {
+    y: 20,
+    opacity: 0,
+    duration: 2.2,
+    ease: 'power3.out',
+    delay: 0.5
+  });
+}
+
 // Hero section animations
 gsap.timeline()
   .from('.hero-title', {
@@ -249,6 +268,35 @@ gsap.timeline({
     opacity: 0,
     ease: 'power3.out'
   }, '-=0.5');
+
+  // ===============================
+  // SCROLL TO TOP BUTTON
+  // ===============================
+  const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+  const homeSection = document.getElementById('home');
+
+  if (scrollToTopBtn && homeSection) {
+    const homeSectionHeight = homeSection.offsetHeight;
+
+    // Show or hide button based on scroll position
+    window.addEventListener('scroll', () => {
+      // homeセクションの高さより多くスクロールしたらボタンを表示
+      if (window.scrollY > homeSectionHeight) {
+        scrollToTopBtn.classList.add('show');
+      } else {
+        scrollToTopBtn.classList.remove('show');
+      }
+    });
+
+    // Smooth scroll to top on click
+    scrollToTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
 
 // ===============================
 // STATISTICS COUNTER ANIMATION
@@ -445,41 +493,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // ===============================
-  // SCROLL TO TOP BUTTON
-  // ===============================
-  const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-  const homeSection = document.getElementById('home');
-
-  if (scrollToTopBtn && homeSection) {
-    const homeSectionHeight = homeSection.offsetHeight;
-
-    // Show or hide button based on scroll position
-    window.addEventListener('scroll', () => {
-      // homeセクションの高さより多くスクロールしたらボタンを表示
-      if (window.scrollY > homeSectionHeight) {
-        scrollToTopBtn.classList.add('show');
-      } else {
-        scrollToTopBtn.classList.remove('show');
-      }
-    });
-
-    // Smooth scroll to top on click
-    scrollToTopBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-  }
 });
-
+  
 // ===============================
 // ACCESSIBILITY ENHANCEMENTS
 // ===============================
 
-// Keyboard navigation for custom elements
+// Keyboard navigation for custom elements  
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
     const target = e.target;
