@@ -394,39 +394,6 @@ window.addEventListener('scroll', () => {
 });
 
 // ===============================
-// SCROLL INDICATOR FUNCTIONALITY
-// ===============================
-
-const scrollIndicator = document.querySelector('.scroll-indicator');
-
-scrollIndicator.addEventListener('click', () => {
-  const philosophySection = document.querySelector('#philosophy');
-  const offsetTop = philosophySection.offsetTop - 70;
-  
-  window.scrollTo({
-    top: offsetTop,
-    behavior: 'smooth'
-  });
-});
-
-// Hide scroll indicator after scrolling
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 100) {
-    gsap.to(scrollIndicator, {
-      duration: 0.3,
-      opacity: 0,
-      y: 20
-    });
-  } else {
-    gsap.to(scrollIndicator, {
-      duration: 0.3,
-      opacity: 1,
-      y: 0
-    });
-  }
-});
-
-// ===============================
 // LOADING ANIMATIONS
 // ===============================
 
@@ -452,37 +419,61 @@ window.addEventListener('load', () => {
 // MOBILE MENU ANIMATIONS
 // ===============================
 
-const navbarToggler = document.querySelector('.navbar-toggler');
-const navbarCollapse = document.querySelector('.navbar-collapse');
+document.addEventListener('DOMContentLoaded', function() {
+  const navbarToggler = document.querySelector('.navbar-toggler');
+  const navbarTogglerIcon = navbarToggler.querySelector('.navbar-toggler-icon');
+  const navbarCollapse = document.getElementById('navbarNav');
 
-if (navbarToggler) {
-  navbarToggler.addEventListener('click', () => {
-    if (navbarCollapse.classList.contains('show')) {
-      // Closing animation
-      gsap.to('.navbar-nav .nav-item', {
-        duration: 0.3,
-        opacity: 0,
-        y: -20,
-        stagger: 0.1,
-        ease: 'power2.in'
+  if (navbarToggler && navbarCollapse && navbarTogglerIcon) {
+    navbarToggler.addEventListener('click', function() {
+      const isExpanded = navbarToggler.getAttribute('aria-expanded') === 'true';
+      
+      // Note: We check !isExpanded because the attribute is updated *after* the click event
+      if (!isExpanded) {
+        navbarTogglerIcon.classList.remove('navbar-toggler-icon');
+        navbarTogglerIcon.classList.add('bi', 'bi-x-lg');
+      } else {
+        navbarTogglerIcon.classList.remove('bi', 'bi-x-lg');
+        navbarTogglerIcon.classList.add('navbar-toggler-icon');
+      }
+    });
+
+    // Reset icon when menu is hidden
+    navbarCollapse.addEventListener('hidden.bs.collapse', function () {
+      navbarTogglerIcon.classList.remove('bi', 'bi-x-lg');
+      navbarTogglerIcon.classList.add('navbar-toggler-icon');
+    });
+  }
+
+  // ===============================
+  // SCROLL TO TOP BUTTON
+  // ===============================
+  const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+  const homeSection = document.getElementById('home');
+
+  if (scrollToTopBtn && homeSection) {
+    const homeSectionHeight = homeSection.offsetHeight;
+
+    // Show or hide button based on scroll position
+    window.addEventListener('scroll', () => {
+      // homeセクションの高さより多くスクロールしたらボタンを表示
+      if (window.scrollY > homeSectionHeight) {
+        scrollToTopBtn.classList.add('show');
+      } else {
+        scrollToTopBtn.classList.remove('show');
+      }
+    });
+
+    // Smooth scroll to top on click
+    scrollToTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
       });
-    } else {
-      // Opening animation
-      setTimeout(() => {
-        gsap.fromTo('.navbar-nav .nav-item', 
-          { opacity: 0, y: -20 },
-          {
-            duration: 0.3,
-            opacity: 1,
-            y: 0,
-            stagger: 0.1,
-            ease: 'power2.out'
-          }
-        );
-      }, 100);
-    }
-  });
-}
+    });
+  }
+});
 
 // ===============================
 // ACCESSIBILITY ENHANCEMENTS
@@ -616,35 +607,6 @@ if (window.gsap && window.ScrollTrigger) {
     opacity: 0,
     duration: 1,
     ease: 'power3.out',
-  });
-}
-
-// ===============================
-// SCROLL TO TOP BUTTON
-// ===============================
-const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-const homeSection = document.getElementById('home');
-
-if (scrollToTopBtn && homeSection) {
-  const homeSectionHeight = homeSection.offsetHeight;
-
-  // Show or hide button based on scroll position
-  window.addEventListener('scroll', () => {
-    // homeセクションの高さより多くスクロールしたらボタンを表示
-    if (window.scrollY > homeSectionHeight) {
-      scrollToTopBtn.classList.add('show');
-    } else {
-      scrollToTopBtn.classList.remove('show');
-    }
-  });
-
-  // Smooth scroll to top on click
-  scrollToTopBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
   });
 }
 
